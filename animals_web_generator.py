@@ -11,11 +11,12 @@ output= ""
 
 # Iterate through the animals and print the requested details
 for animal in animals_data:
-    output += f"Name: {animal['name']}\n"
-    output += f"Diet: {animal['characteristics']['diet']}\n"
-    output += f"Location: {animal['locations'][0]}\n"
+    output += '<li class="cards__item">'
+    output += f"Name: {animal['name']}<br/>\n"
+    output += f"Diet: {animal['characteristics']['diet']}<br/>\n"
+    output += f"Location: {animal['locations'][0]}<br/>\n"
     if 'type' in animal.get('characteristics', {}):
-        output += f"Type: {animal['characteristics']['type']}\n"
+        output += f"Type: {animal['characteristics']['type']}<br/>\n"
     output += "\n"
 html_output = html_data.replace("__REPLACE_ANIMALS_INFO__", output)
 print(html_output)
