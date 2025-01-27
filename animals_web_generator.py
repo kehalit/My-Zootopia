@@ -1,21 +1,24 @@
 import json
+import webbrowser
 
 with open('animals_data.json', 'r') as file:
     animals_data = json.load(file)
+with open("animals_template.html", "r") as file_2:
+    html_data = file_2.read()
+
+
+output= ""
 
 # Iterate through the animals and print the requested details
 for animal in animals_data:
-    if 'name' in animal:
-        print(f"Name: {animal['name']}")
+    output += f"Name: {animal['name']}\n"
+    output += f"Diet: {animal['characteristics']['diet']}\n"
+    output += f"Location: {animal['locations'][0]}\n"
+    if 'type' in animal.get('characteristics', {}):
+        output += f"Type: {animal['characteristics']['type']}\n"
+    output += "\n"
+html_output = html_data.replace("__REPLACE_ANIMALS_INFO__", output)
+print(html_output)
 
-    # Access the characteristics for diet and type
-    characteristics = animal.get('characteristics', {})
-    if 'diet' in characteristics:
-        print(f"Diet: {characteristics['diet']}")
-    if 'locations' in animal and animal['locations']:
-        print(f"Location: {animal['locations'][0]}")
-    if 'type' in characteristics:
-        print(f"Type: {characteristics['type']}")
-
-    # Add a blank line between animals for readability
-    print()
+with open("animals.html", "w") as file_3:
+    file_3.write(html_output)
